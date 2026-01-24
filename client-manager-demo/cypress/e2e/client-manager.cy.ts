@@ -1,3 +1,8 @@
+function wait_demo() {
+  cy.wait(1000);
+}
+
+
 // Describe this testing file (aka suite)
 describe('Client Manager', () => {
   /**
@@ -9,8 +14,7 @@ describe('Client Manager', () => {
     //visit demo site
     // cy. indicates we are using Cypress / automated testing
     cy.visit('localhost:4200');
-    //wait for 500 ms
-    cy.wait(500);
+    wait_demo();
   });
 
   /**
@@ -37,16 +41,21 @@ describe('Client Manager', () => {
   it('adds a new client', () => {
     //find the element to input a name and type a test name
     cy.get('[data-cy="input-name"]').type('Charlie Tester');
+    wait_demo();
     //find the element to input an email and type a test email
     cy.get('[data-cy="input-email"]').type('charlie@test.com');
+    wait_demo();
     //find the element to set a status and select Active
     cy.get('[data-cy="select-status"]').select('Active');
+    wait_demo();
 
     //find the button to add the client and click it
     cy.get('[data-cy="btn-add-client"]').click();
+    wait_demo();
 
     //verify the new client appears in the client list
     cy.get('[data-cy="client-row"]').should('contain', 'Charlie Tester');
+    wait_demo();
   });
 
   /**
@@ -55,12 +64,14 @@ describe('Client Manager', () => {
   it('filters clients', () => {
     //find the input box for the filter functionality and type "alice"
     cy.get('[data-cy="input-filter"]').type('alice');
+    wait_demo();
 
     //verify that all displayed clients contain "alice" in their text
     cy.get('[data-cy="client-row"]').each(row => {
       //the row should contain "alice"
       cy.wrap(row).should('contain.text', 'alice');
     });
+    wait_demo();
   });
 
   /**
@@ -72,9 +83,11 @@ describe('Client Manager', () => {
       //click the button to delete
       cy.get('[data-cy="btn-delete-client"]').click();
     });
+    wait_demo();
     //client list should now have 1 clients
     // ID = 2: Bob Smith
     // Alice Johnson was deleted
     cy.get('[data-cy="client-row"]').should('have.length', 1);
+    wait_demo();
   });
 });
